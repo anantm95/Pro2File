@@ -6,9 +6,12 @@ from bs4 import BeautifulSoup
 
 
 review = "This is a very good product. These speakers have an amazing base but not so good treble. \
-Also, the speakers are made of high-class wood and hence an unbeatable sound. Worth buying."
+Also, the speakers are made of high-class wood and hence an unbeatable sound. Worth buying. This product is \
+well-made, and has a good durability. I received the product in not so good packaging which was the only \
+issue. The speakers are worth for it's price. Go for it without thinking."
 
-review2 = "This product is well-made, and it does an EXCELLENT job keeping leaves out of the gutter.\
+
+review2 = "This product is well-made, and it does an EXCELLENT job keeping leaves out of the gutter. \
 Unfortunately, while it also blocks pine needles, the needles on our New England pine trees are fine \
 enough that they manage to get stuck upright in the mesh, and after a while enough of them accumulate so \
 they have to be removed by hand. What's particularly bad is the needles can't be brushed off, but have to \
@@ -19,9 +22,15 @@ from melting snow tends to freeze up and block the mesh - particularly on the si
 that does not face the sun - so there is a nagging question in the back of my mind if these might \
 contribute to ice dam formation."
 
+fs = FrequencySummarizer()
+review_short_list = fs.summarize(review, 3)
+review_short = " ".join(review_short_list)
+
+#print review_short
+
 total_score = 0
 
-lower_review = review.lower()
+lower_review = review_short.lower()
 
 tokens = nltk.word_tokenize(lower_review)
 tagged_tokens = nltk.pos_tag(tokens)
@@ -39,6 +48,7 @@ for subtree in chunk_tree.subtrees():
 		np_list.append(subtree.leaves())
 
 #print np_list;
+print "\nExtracted Features:\n"
 
 for phrase in np_list:
 	feature_score = 0
@@ -66,7 +76,7 @@ for adj in adjectives:
     elif (adj in negativeWords):
         total_score -= negativeWords[adj]
 
-print "Total Score: ", total_score
+print "\nTotal Score: ", total_score, "\n"
 
 '''feed_xml = urllib2.urlopen('http://feeds.bbci.co.uk/news/rss.xml').read()
 feed = BeautifulSoup(feed_xml.decode('utf8'), "lxml")
@@ -79,8 +89,4 @@ for article_url in to_summarize[:5]:
     print title
     for s in fs.summarize(text, 2):
     	print '*',s'''
-
-fs = FrequencySummarizer()
-review_short = fs.summarize(review2, 2)
-print review_short
 
