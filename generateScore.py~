@@ -10,18 +10,12 @@ Also, the speakers are made of high-class wood and hence an unbeatable sound. Wo
 well-made, and has a good durability. I received the product in not so good packaging which was the only \
 issue. The speakers are worth for it's price. Go for it without thinking."
 
-review2 = "OnePlus 2 has a lot to its name - a great fingerprint scanner, a wonderful camera (12MP + 5MP), a powerful Snapdragon processor, and a vibrant display, \ most important of all - the experience that the device provides is just amazing. The handset feels premium - and the interface is as smooth as it gets. \
-There is nothing wrong at all - anywhere - in this beast of a device. But if you are really critical - the only CONS, that I can find is the new port for charging \ and the speakers. It has a new standard charging-port - so it'll take some time but you'll get used to it. The speakers are a little on \
-the weaker side, but it's definitely not a deal breaker. \
-For an in-depth review, check this link - http://bit.ly/OnePlus2Discount-n-Review \
-On the whole - JUST GET THIS MOBILE! It's just amazing! :)"
-
 
 fs = FrequencySummarizer()
 review_short_list = fs.summarize(review, 3)
 review_short = " ".join(review_short_list)
 
-#print review_short
+print review_short
 
 total_score = 0
 
@@ -30,7 +24,7 @@ lower_review = review_short.lower()
 tokens = nltk.word_tokenize(lower_review)
 tagged_tokens = nltk.pos_tag(tokens)
 
-#print tagged_tokens
+print tagged_tokens
 
 chunk_grammar = "NP: {<JJ>+<NN>}"
 chunk_parser = nltk.RegexpParser(chunk_grammar)
