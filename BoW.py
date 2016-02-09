@@ -31,16 +31,14 @@ negativeWords['low-class'] = 2.8
 negativeWords["don't buy"] = 3.0
 
 
-def sum_positive_words():
-	sum = 0
-	for word in positiveWords:
-		sum += positiveWords[word]
+def max_positive_words():
+	return max(positiveWords.values())
 
-	return sum
+def max_negative_words():
+	return max(negativeWords.values())
 
-def sum_negative_words():
-	sum = 0
-	for word in negativeWords:
-		sum += negativeWords[word]
+def min_positive_words():
+	return min(positiveWords.values())
 
-	return sum
+def min_negative_words():
+	return min(negativeWords.values())
