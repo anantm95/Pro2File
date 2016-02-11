@@ -70,7 +70,7 @@ for (word,tag) in tagged_tokens:
 	if(tag == 'JJ'):
 		adjectives.append(word)
 
-print adjectives
+#print adjectives
 
 
 for adj in adjectives:
