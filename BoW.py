@@ -1,6 +1,9 @@
-positiveWords = {}
+import csv
 
-positiveWords['ok'] = 0.5
+positiveWords = {}
+negativeWords = {}
+
+'''positiveWords['ok'] = 0.5
 positiveWords['okay'] = 0.5
 positiveWords['good'] = 1
 positiveWords['well-made'] = 1
@@ -22,7 +25,7 @@ positiveWords['powerful'] = 2.4
 positiveWords['vibrant'] = 3.2
 positiveWords['important'] = 1.5
 
-negativeWords = {}
+
 
 negativeWords['bad'] = 1
 negativeWords['not ok'] = 0.5
@@ -36,6 +39,33 @@ negativeWords['not worth'] = 2.5
 negativeWords['low-class'] = 2.8
 negativeWords["don't buy"] = 3.0
 negativeWords["critical"] = 2.8
+'''
+
+with open('positive_list.csv', mode='r') as infile:
+    reader = csv.reader(infile)
+    positiveWords = dict((rows[0],float(rows[1])) for rows in reader)
+
+with open('negative_list.csv', mode='r') as infile:
+    reader = csv.reader(infile)
+    negativeWords = dict((rows[0],float(rows[1])*(-1)) for rows in reader)
+
+'''
+
+
+with open('senti.csv', mode='r') as infile:
+	reader = csv.reader(infile)
+
+	positiveWords = dict((rows[2].replace(' ', '')[:-2].lower(), rows[0]) for rows in reader)
+	negativeWords = dict((rows[2].replace(' ', '')[:-2].lower(), rows[1]) for rows in reader)
+	
+
+	count = 2
+	while count<=8:
+		negativeWords = dict((rows[3], rows[1]) for rows in reader)
+		count = count + 1
+'''
+#print positiveWords['best']
+
 
 
 def max_positive_words():

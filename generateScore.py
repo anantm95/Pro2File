@@ -5,7 +5,7 @@ from BoW import *
 from bs4 import BeautifulSoup
 
 
-review = "This is a very good product. These speakers have an amazing base but very bad treble. \
+review1 = "This is a very good product. These speakers have an amazing base but very bad treble. \
 Also, the speakers are made of high-class wood and hence an unbeatable sound. Worth buying. This product is \
 well-made, and has a good durability. I received the product in not so good packaging which was the only \
 issue. The speakers are worth for it's price. Go for it without thinking."
@@ -16,9 +16,17 @@ the weaker side, but it's definitely not a deal breaker. \
 For an in-depth review, check this link - http://bit.ly/OnePlus2Discount-n-Review \
 On the whole - JUST GET THIS MOBILE! It's just amazing! :)"
 
+review3 = "Conversations with God Book 1 is the single most extraordinary book I have ever \
+read!!!It totally changed my life. I would recommend it to anyone who is seeking emotional\
+ and spiritual growth, freedom and empowerment. This book did wonders for my relationship with \
+ God, myself and everyone around me. I approach living differently, I enjoy life more.  I have \
+ had a copy of this book since it was first published (1997)? and I still turn to it again and \
+ again for spiritual enlightenment, upliftment and remembering. I love this book and I love \
+ Neale Walsch for his courage in writing it."
+
 
 fs = FrequencySummarizer()
-review_short_list = fs.summarize(review, 3)
+review_short_list = fs.summarize(review1, 3)
 review_short = " ".join(review_short_list)
 
 #print review_short
@@ -47,6 +55,10 @@ min_positive = min_positive_words()
 max_negative = max_negative_words()
 min_negative = min_negative_words()
 
+#print 'hello'
+#print max_positive
+#print min_positive
+
 #print np_list;
 print "\nExtracted Features:\n"
 
@@ -56,6 +68,7 @@ for phrase in np_list:
 		#print phrase
 		if (tag == 'JJ'):
 			if (word in positiveWords):
+				print positiveWords[word]
 				feature_score += (positiveWords[word] - min_positive)/(max_positive - min_positive)
 			elif (word in negativeWords):
 				feature_score -= (negativeWords[word] - min_negative)/(max_negative - min_negative)
@@ -70,12 +83,13 @@ for (word,tag) in tagged_tokens:
 	if(tag == 'JJ'):
 		adjectives.append(word)
 
-#print adjectives
+print adjectives
 
 
 for adj in adjectives:
     if (adj in positiveWords):
-	    total_score += (positiveWords[adj] - min_positive)/(max_positive - min_positive)
+    	#print positiveWords[adj]
+    	total_score += (positiveWords[adj] - min_positive)/(max_positive - min_positive)
 
     elif (adj in negativeWords):
         total_score -= (negativeWords[adj] - min_negative)/(max_negative - min_negative)
