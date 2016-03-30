@@ -6,7 +6,7 @@ from bs4 import BeautifulSoup
 
 
 review1 = "This is a very good product. These speakers have an amazing base but very bad treble. \
-Also, the speakers are made of high-class wood and hence an unbeatable sound. Worth buying. This product is \
+Also, the speakers are made of high-class wood and hence an extraordinary sound. Worth buying. This product is \
 well-made, and has a good durability. I received the product in not so good packaging which was the only \
 issue. The speakers are worth for it's price. Go for it without thinking."
 
@@ -68,7 +68,7 @@ for phrase in np_list:
 		#print phrase
 		if (tag == 'JJ'):
 			if (word in positiveWords):
-				print positiveWords[word]
+				#print positiveWords[word]
 				feature_score += (positiveWords[word] - min_positive)/(max_positive - min_positive)
 			elif (word in negativeWords):
 				feature_score -= (negativeWords[word] - min_negative)/(max_negative - min_negative)

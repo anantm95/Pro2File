@@ -41,13 +41,13 @@ negativeWords["don't buy"] = 3.0
 negativeWords["critical"] = 2.8
 '''
 
-with open('positive_list.csv', mode='r') as infile:
-    reader = csv.reader(infile)
-    positiveWords = dict((rows[0],float(rows[1])) for rows in reader)
+# with open('positive_list.csv', mode='r') as infile:
+#     reader = csv.reader(infile)
+#     positiveWords = dict((rows[0],float(rows[1])) for rows in reader)
 
-with open('negative_list.csv', mode='r') as infile:
-    reader = csv.reader(infile)
-    negativeWords = dict((rows[0],float(rows[1])*(-1)) for rows in reader)
+# with open('negative_list.csv', mode='r') as infile:
+#     reader = csv.reader(infile)
+#     negativeWords = dict((rows[0],float(rows[1])*(-1)) for rows in reader)
 
 '''
 
@@ -66,7 +66,20 @@ with open('senti.csv', mode='r') as infile:
 '''
 #print positiveWords['best']
 
-
+wors = []
+with open('senti.csv', mode='r') as infile:
+    reader = csv.reader(infile)
+    for rows in reader:
+    	words = rows[2].split(' ')
+    	for word in words:
+#    		print word[:-2], rows[0], rows[1]
+			try:
+				if float(rows[0]) != 0:
+					positiveWords[word[:-2]] = float(rows[0])
+				if float(rows[1]) != 0:
+					negativeWords[word[:-2]] = float(rows[1])
+			except:
+				wors.append(word)
 
 def max_positive_words():
 	return max(positiveWords.values())
