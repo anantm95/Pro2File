@@ -45,13 +45,13 @@ min_positive = min_positive_words()
 max_negative = max_negative_words()
 min_negative = min_negative_words()
 
-chunk_grammar = "NP: {<RB|RBR|RBS>?<JJ>+<NN|NNS>}"
-chunk_parser = nltk.RegexpParser(chunk_grammar)
-chunk_tree = chunk_parser.parse(tagged_tokens)
+chunk_grammar_type1 = "NP: {<RB|RBR|RBS>?<JJ>+<NN|NNS>}"
+chunk_parser_type1 = nltk.RegexpParser(chunk_grammar_type1)
+chunk_tree_type1 = chunk_parser_type1.parse(tagged_tokens)
 
 np_list = []
 
-for subtree in chunk_tree.subtrees():
+for subtree in chunk_tree_type1.subtrees():
 	if (subtree.label() == 'NP'):
 		np_list.append(subtree.leaves())
 
@@ -93,7 +93,11 @@ for phrase in np_list:
 
 		if (tag == 'NN' or tag == 'NNS'):
 			print word, " ", feature_score
-	
+
+
+chunk_grammar_type2 = "NP: {<RB|RBR|RBS>?<JJ>+<NN|NNS>}"
+chunk_parser_type2 = nltk.RegexpParser(chunk_grammar_type2)
+chunk_tree_type2 = chunk_parser_type2.parse(tagged_tokens)	
 
 adjectives = []
 
