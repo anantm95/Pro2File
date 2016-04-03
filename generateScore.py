@@ -40,13 +40,23 @@ tagged_tokens = nltk.pos_tag(tokens)
 
 #print tagged_tokens
 
-chunk_grammar = "NP: {<JJ>+<NN>}"
-chunk_parser = nltk.RegexpParser(chunk_grammar)
-chunk_tree = chunk_parser.parse(tagged_tokens)
+chunk_grammar_intensifier_type1 = "NP: {<RB>+<JJ>+<NN>}"
+chunk_parser_intensifier_type1 = nltk.RegexpParser(chunk_grammar_intensifier_type1)
+chunk_tree_intensifier_type1 = chunk_parser_intensifier_type1(tagged_tokens)
 
 np_list = []
 
-for subtree in chunk_tree.subtrees():
+for subtree in chunk_tree_intensifier_type1.subtrees():
+	if (subtree.label() = 'NP'):
+		np_list.append(subtree.leaves())
+
+chunk_grammar_type1 = "NP: {<JJ>+<NN>}"
+chunk_parser_type1 = nltk.RegexpParser(chunk_grammar_type1)
+chunk_tree_type1 = chunk_parser.parse(tagged_tokens)
+
+np_list = []
+
+for subtree in chunk_tree_type1.subtrees():
 	if (subtree.label() == 'NP'):
 		np_list.append(subtree.leaves())
 
@@ -59,7 +69,7 @@ min_negative = min_negative_words()
 #print max_positive
 #print min_positive
 
-#print np_list;
+print np_list;
 print "\nExtracted Features:\n"
 
 for phrase in np_list:
