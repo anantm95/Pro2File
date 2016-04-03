@@ -40,23 +40,13 @@ tagged_tokens = nltk.pos_tag(tokens)
 
 #print tagged_tokens
 
-chunk_grammar_intensifier_type1 = "NP: {<RB>+<JJ>+<NN>}"
-chunk_parser_intensifier_type1 = nltk.RegexpParser(chunk_grammar_intensifier_type1)
-chunk_tree_intensifier_type1 = chunk_parser_intensifier_type1(tagged_tokens)
+chunk_grammar = "NP: {<RB>?<JJ>+<NN>}"
+chunk_parser = nltk.RegexpParser(chunk_grammar)
+chunk_tree = chunk_parser.parse(tagged_tokens)
 
 np_list = []
 
-for subtree in chunk_tree_intensifier_type1.subtrees():
-	if (subtree.label() = 'NP'):
-		np_list.append(subtree.leaves())
-
-chunk_grammar_type1 = "NP: {<JJ>+<NN>}"
-chunk_parser_type1 = nltk.RegexpParser(chunk_grammar_type1)
-chunk_tree_type1 = chunk_parser.parse(tagged_tokens)
-
-np_list = []
-
-for subtree in chunk_tree_type1.subtrees():
+for subtree in chunk_tree.subtrees():
 	if (subtree.label() == 'NP'):
 		np_list.append(subtree.leaves())
 
@@ -70,18 +60,36 @@ min_negative = min_negative_words()
 #print min_positive
 
 print np_list;
+print negativeWords['bad']
 print "\nExtracted Features:\n"
 
 for phrase in np_list:
 	feature_score = 0
 	for (word, tag) in phrase:
 		#print phrase
+		intensify = 0
+		if(tag == 'RB'):
+			intensify = 1
 		if (tag == 'JJ'):
-			if (word in positiveWords):
+			if (word in positiveWords and word in negativeWords):
+				if (positiveWords[word] > negativeWords[word]):
+					feature_score += (positiveWords[word] - min_positive)/(max_positive - min_positive)
+					if (intensify == 1):
+						feature_score *= 1.2
+				else:
+					feature_score -= (negativeWords[word] - min_negative)/(max_negative - min_negative)
+					if (intensify == 1):
+						feature_score = feature_score * 1.2
+
+			elif (word in positiveWords):
 				#print positiveWords[word]
 				feature_score += (positiveWords[word] - min_positive)/(max_positive - min_positive)
+				if (intensify == 1):
+					feature_score *= 1.2
 			elif (word in negativeWords):
 				feature_score -= (negativeWords[word] - min_negative)/(max_negative - min_negative)
+				if (intensify == 1):
+					feature_score *= 1.2
 
 		if (tag == 'NN'):
 			print word, " ", feature_score
