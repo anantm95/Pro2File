@@ -65,12 +65,15 @@ print "\nExtracted Features:\n"
 
 for phrase in np_list:
 	feature_score = 0
+	intensify = 0
 	for (word, tag) in phrase:
 		#print phrase
-		intensify = 0
+		
 		if(tag == 'RB'):
 			intensify = 1
+
 		if (tag == 'JJ'):
+
 			if (word in positiveWords and word in negativeWords):
 				if (positiveWords[word] > negativeWords[word]):
 					feature_score += (positiveWords[word] - min_positive)/(max_positive - min_positive)
@@ -86,6 +89,7 @@ for phrase in np_list:
 				feature_score += (positiveWords[word] - min_positive)/(max_positive - min_positive)
 				if (intensify == 1):
 					feature_score *= 1.2
+
 			elif (word in negativeWords):
 				feature_score -= (negativeWords[word] - min_negative)/(max_negative - min_negative)
 				if (intensify == 1):
@@ -101,7 +105,7 @@ for (word,tag) in tagged_tokens:
 	if(tag == 'JJ'):
 		adjectives.append(word)
 
-print adjectives
+#print adjectives
 
 
 for adj in adjectives:
